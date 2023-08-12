@@ -24,15 +24,14 @@ jobs:
           docker tag insta-dashboard registry.digitalocean.com/realmein-registry/insta-dashboard
       - name: Push image to DO Container Registry 
         run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard
-
-    pull_latest_and_restart:
-      run-on: ubuntu-latest
-      steps:
-        - name: remotely update and restart service
-          uses: appleboy/ssh-action@v1.0.600
-          with:
-            host: ${{ secrets.HOST }}
-            username: ${{ secrets.USERNAME }}
-            key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-            port: ${{ secrets.PORT }}
-            script: docker login registry.digitalocean.com/realmein-registry -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }} && sleep 10 && systemctl restart insta-dashboard
+  pull_and_restart:
+    runs-on: ubuntu-latest
+    steps:
+      - name: remotely update and restart service
+        uses: appleboy/ssh-action@v1.0.600
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
+          port: ${{ secrets.PORT }}
+          script: docker login registry.digitalocean.com/realmein-registry -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }} && sleep 10 && systemctl restart insta-dashboard
