@@ -22,6 +22,6 @@ jobs:
       - name: Tag image 
         run:
           docker tag insta-dashboard \
-          registry.digitalocean.com/realmein-registry/insta-dashboard:latest
+          registry.digitalocean.com/realmein-registry/insta-dashboard
       - name: Push image to DO Container Registry 
-        run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard:latest
+        run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard
