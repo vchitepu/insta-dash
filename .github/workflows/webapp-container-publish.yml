@@ -21,7 +21,6 @@ jobs:
         run: doctl registry login --expiry-seconds 600
       - name: Tag image 
         run:
-          docker tag insta-dashboard \
-          registry.digitalocean.com/realmein-registry/insta-dashboard
+          docker tag insta-dashboard registry.digitalocean.com/realmein-registry/insta-dashboard
       - name: Push image to DO Container Registry 
         run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard
