@@ -1,0 +1,29 @@
+name: Build and publish container
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: '0.0.1'
+        required: true
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repo 
+        uses: actions/checkout@v2
+      - name: Build image 
+        run: docker build -t insta-dashboard .
+      - name: Install doctl 
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+      - name: Log in to DO Container Registry 
+        run: doctl registry login --expiry-seconds 600
+      - name: Tag image 
+        run:
+          docker tag insta-dashboard \
+          registry.digitalocean.com/realmein-registry/insta-dashboard:${{github.event.inputs.version }}
+      - name: Push image to DO Container Registry 
+        run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard:${{ github.event.inputs.version }}
