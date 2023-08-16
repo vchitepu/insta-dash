@@ -25,15 +25,15 @@ jobs:
       - name: Push image to DO Container Registry 
         run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard
   pull_and_restart:
+    needs: build_and_push
     runs-on: ubuntu-latest
     steps:
       - name: remotely update and restart service
         uses: fifsky/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
+          user: ${{ secrets.USERNAME }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
-          port: ${{ secrets.PORT }}
           command: |
             docker login registry.digitalocean.com/realmein-registry -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }} 
             sleep 10
