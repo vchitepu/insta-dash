@@ -28,10 +28,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: remotely update and restart service
-        uses: appleboy/ssh-action@v1.0.0
+        uses: fifsky/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.USERNAME }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           port: ${{ secrets.PORT }}
-          script: docker login registry.digitalocean.com/realmein-registry -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }} && sleep 10 && systemctl restart insta-dashboard
+          command: |
+            docker login registry.digitalocean.com/realmein-registry -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }} 
+            sleep 10
+            systemctl restart insta-dashboard
