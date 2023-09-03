@@ -1,2 +1,4 @@
-numpy==1.25.1
-streamlit==1.25.0
+streamlit==1.10.0
+streamlit_imagegrid==0.0.3
+validators==0.20.0
+redfin==0.1.1
