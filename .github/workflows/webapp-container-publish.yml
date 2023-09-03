@@ -9,21 +9,21 @@ jobs:
   build_and_push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout the repo 
+      - name: Checkout the repo
         uses: actions/checkout@v2
-      - name: Build image 
+      - name: Build image
         run: docker build -t insta-dashboard .
-      - name: Install doctl 
+      - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
           token: ${{ secrets.DIGITALOCEAN_API_TOKEN }}
-      - name: Log in to DO Container Registry 
+      - name: Log in to DO Container Registry
         run: doctl registry login --expiry-seconds 600
-      - name: Tag image 
+      - name: Tag image
         run:
-          docker tag insta-dashboard registry.digitalocean.com/realmein-registry/insta-dashboard
-      - name: Push image to DO Container Registry 
-        run: docker push registry.digitalocean.com/realmein-registry/insta-dashboard
+          docker tag insta-dashboard registry.digitalocean.com/${{secrets.REGISTRY}}/insta-dashboard
+      - name: Push image to DO Container Registry
+        run: docker push registry.digitalocean.com/${{secrets.REGISTRY}}/insta-dashboard
   pull_and_restart:
     needs: build_and_push
     runs-on: ubuntu-latest
@@ -35,6 +35,6 @@ jobs:
           user: ${{ secrets.USERNAME }}
           key: ${{ secrets.DIGITALOCEAN_SSH_KEY }}
           command: |
-            docker login registry.digitalocean.com/realmein-registry -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }} 
+            docker login registry.digitalocean.com/${{secrets.REGISTRY}} -u ${{ secrets.DIGITALOCEAN_API_TOKEN }} -p ${{ secrets.DIGITALOCEAN_API_TOKEN }}
             sleep 10
             systemctl restart insta-dashboard
