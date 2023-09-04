@@ -16,5 +16,3 @@ jobs:
         uses: actions/checkout@v2
       - name: Build image
         run: docker build -t redfin-scraper .
-      - name: Run images
-        run: docker run --name redfin-scraper -p 80:80 redfin-scraper
