@@ -1,7 +1,6 @@
 import streamlit as st
 import os
 import shutil
-from streamlit_imagegrid import streamlit_imagegrid
 from lib.redfin import RedFinImages
 
 redfin = RedFinImages()
