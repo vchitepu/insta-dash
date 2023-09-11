@@ -2,3 +2,5 @@ streamlit==1.10.0
 validators==0.20.0
 redfin==0.1.1
 altair==4.0
+opencv-python==4.8.0.76
+numpy==1.24.3
