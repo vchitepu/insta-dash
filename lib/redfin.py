@@ -50,7 +50,7 @@ class RedFinImages():
             i_url = i[0] + '_' + str(x) + '_' + i[1]
 
             try:
-                urllib.request.urlretrieve(i_url, "images/"+dir+"/img_"+str(x)+"_.jpg")
+                urllib.request.urlretrieve(i_url, "images/"+dir+"/img_"+str(x)+".jpg")
             except:
                 continue
         shutil.make_archive('images/{dir}'.format(dir=dir), 'zip', 'images/{dir}'.format(dir=dir))
