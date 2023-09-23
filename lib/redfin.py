@@ -46,7 +46,7 @@ class RedFinImages():
         dir = self.get_random_string()
         os.mkdir('images')
         os.mkdir('images/{dir}'.format(dir=dir))
-        for x in range(1,11):
+        for x in range(1,15):
             i_url = i[0] + '_' + str(x) + '_' + i[1]
 
             try:
